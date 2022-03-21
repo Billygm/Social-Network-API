@@ -3,7 +3,7 @@ const { User, Thought } = require("../models");
 module.exports = {
   getUsers(req, res) {
     User.find()
-      .sort({ name: 1 })
+      .sort({ username: 1 })
       .toArray()
       .then((users) => {
         console.log(`Successfully found ${users.length} documents.`);
