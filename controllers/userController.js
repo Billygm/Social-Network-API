@@ -1,23 +1,14 @@
 const { User, Thought } = require("../models");
 
-const userCount = async () =>
-  User.aggregate()
-    .count("userCount")
-    .then((numberOfUsers) => numberOfUsers);
-
 module.exports = {
   getUsers(req, res) {
     User.find()
-      .then(async (users) => {
-        const userObj = {
-          users,
-          userCount: await userCount(),
-        };
-        return res.json(userObj);
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
+      .sort({ name: 1 })
+      .toArray()
+      .then((users) => {
+        console.log(`Successfully found ${users.length} documents.`);
+        users.forEach(console.log);
+        return users;
       });
   },
   getSingleUser(req, res) {
